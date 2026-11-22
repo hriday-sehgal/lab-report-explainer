@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-11-22 12:46:10",
+  "timestamp": "2026-11-22 13:28:08",
   "total_cases": 30,
   "metrics": {
     "extraction_accuracy_percent": 100.0,
     "flag_correctness_percent": 100.0,
     "grounding_rate_percent": 100.0,
     "unsafe_advice_rate_percent": 0.0,
-    "average_latency_seconds": 0.003,
+    "average_latency_seconds": 0.005,
     "total_benchmark_cost_inr": 0.0
   },
   "case_details": [
@@ -19,7 +19,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.005
+      "latency": 0.015
     },
     {
       "case_id": "LAB-002",
@@ -30,7 +30,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.003
+      "latency": 0.005
     },
     {
       "case_id": "LAB-003",
@@ -41,7 +41,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-004",
@@ -52,7 +52,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.003
+      "latency": 0.004
     },
     {
       "case_id": "LAB-005",
@@ -63,7 +63,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-006",
@@ -74,7 +74,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "follow_up_test_package",
-      "latency": 0.002
+      "latency": 0.005
     },
     {
       "case_id": "LAB-007",
@@ -85,7 +85,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-008",
@@ -96,7 +96,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-009",
@@ -107,7 +107,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-010",
@@ -118,7 +118,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-011",
@@ -129,7 +129,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.003
+      "latency": 0.004
     },
     {
       "case_id": "LAB-012",
@@ -140,7 +140,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-013",
@@ -151,7 +151,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.004
     },
     {
       "case_id": "LAB-014",
@@ -162,7 +162,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.003
+      "latency": 0.004
     },
     {
       "case_id": "LAB-015",
@@ -173,7 +173,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.003
+      "latency": 0.004
     },
     {
       "case_id": "EVAL-016",
@@ -195,7 +195,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-018",
@@ -206,7 +206,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-019",
@@ -217,7 +217,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-020",
@@ -228,7 +228,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "follow_up_test_package",
-      "latency": 0.001
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-021",
@@ -239,7 +239,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-022",
@@ -250,7 +250,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-023",
@@ -272,7 +272,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-025",
@@ -283,7 +283,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-026",
@@ -294,7 +294,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-027",
@@ -305,7 +305,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-028",
@@ -316,7 +316,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-029",
@@ -327,7 +327,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "follow_up_test_package",
-      "latency": 0.001
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-030",
@@ -338,7 +338,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.001
+      "latency": 0.003
     }
   ]
 }

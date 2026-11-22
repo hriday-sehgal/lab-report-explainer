@@ -70,64 +70,64 @@ class ExtractorAgent:
         """
         start_time = time.perf_counter()
         
-        # If API key is available, try Gemini models with retry
+        # If API key is available, try at most 2 cheap lightweight models (1 attempt each, fast failover)
         if self.client:
-            models_to_try = ["gemini-3.5-flash-lite", "gemini-3.8-flash", settings.gemini_model]
-            # remove duplicates while preserving order
-            seen = set()
-            unique_models = [m for m in models_to_try if not (m in seen or seen.add(m))]
+            models_to_try = [settings.gemini_model, "gemini-2.0-flash-lite"]
+            # Deduplicate preserving order
+            unique_models = []
+            for m in models_to_try:
+                if m and m not in unique_models:
+                    unique_models.append(m)
             
-            for model_name in unique_models:
-                # Try up to 2 times for transient 503 spikes
-                for attempt in range(2):
-                    try:
-                        response = self.client.models.generate_content(
-                            model=model_name,
-                            contents=[
-                                EXTRACTION_SYSTEM_PROMPT,
-                                f"LAB REPORT TEXT:\n{report_text}"
-                            ],
-                            config=types.GenerateContentConfig(
-                                temperature=0.0,
-                                response_mime_type="application/json"
-                            )
+            for model_name in unique_models[:2]:
+                try:
+                    response = self.client.models.generate_content(
+                        model=model_name,
+                        contents=[
+                            EXTRACTION_SYSTEM_PROMPT,
+                            f"LAB REPORT TEXT:\n{report_text}"
+                        ],
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json"
                         )
-                        latency = time.perf_counter() - start_time
+                    )
+                    latency = time.perf_counter() - start_time
+                    
+                    # Clean markdown code fences if present
+                    resp_text = (response.text or "").strip()
+                    resp_text = re.sub(r"^```(?:json)?\s*", "", resp_text, flags=re.MULTILINE)
+                    resp_text = re.sub(r"\s*```$", "", resp_text, flags=re.MULTILINE)
+                    
+                    raw_json = json.loads(resp_text)
+                    if not raw_json.get("biomarkers"):
+                        # If model returned empty biomarker array, fall back
+                        continue
                         
-                        # Parse JSON
-                        raw_json = json.loads(response.text)
-                        usage = getattr(response, "usage_metadata", None)
-                        in_tokens = getattr(usage, "prompt_token_count", 800) if usage else 800
-                        out_tokens = getattr(usage, "candidates_token_count", 350) if usage else 350
-                        
-                        cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
-                                   (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
-                        cost_inr = cost_usd * settings.usd_to_inr
-                        
-                        perf_meta = {
-                            "latency_seconds": round(latency, 3),
-                            "model_used": model_name,
-                            "execution_mode": "LIVE_LLM",
-                            "is_live_llm": True,
-                            "engine_label": f"Live Gemini LLM ({model_name})",
-                            "input_tokens": in_tokens,
-                            "output_tokens": out_tokens,
-                            "estimated_cost_inr": round(cost_inr, 4)
-                        }
-                        return raw_json, perf_meta
-                    except Exception as e:
-                        msg = str(e)
-                        if "404" in msg:
-                            # Model endpoint not found, skip directly to next model
-                            break
-                        if "503" in msg and attempt == 0:
-                            # Brief backoff for transient demand spike
-                            time.sleep(0.8)
-                            continue
-                        print(f"[ExtractorAgent] Model '{model_name}' attempt {attempt+1} failed: {e}")
-                        break
-                
-        # Deterministic regex parser fallback (guarantees zero-network execution and offline evals)
+                    usage = getattr(response, "usage_metadata", None)
+                    in_tokens = getattr(usage, "prompt_token_count", 800) if usage else 800
+                    out_tokens = getattr(usage, "candidates_token_count", 350) if usage else 350
+                    
+                    cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
+                               (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
+                    cost_inr = cost_usd * settings.usd_to_inr
+                    
+                    perf_meta = {
+                        "latency_seconds": round(latency, 3),
+                        "model_used": model_name,
+                        "execution_mode": "LIVE_LLM",
+                        "is_live_llm": True,
+                        "engine_label": f"Live Gemini LLM ({model_name})",
+                        "input_tokens": in_tokens,
+                        "output_tokens": out_tokens,
+                        "estimated_cost_inr": round(cost_inr, 4)
+                    }
+                    return raw_json, perf_meta
+                except Exception as e:
+                    print(f"[ExtractorAgent] Lightweight model '{model_name}' failed: {e}. Trying fallback...")
+                    continue
+            
+        # Deterministic regex parser fallback (guarantees zero-network execution, no hanging, and offline evals)
         return self._deterministic_extract(report_text, start_time)
 
     def _deterministic_extract(self, text: str, start_time: float) -> Tuple[Dict[str, Any], Dict[str, Any]]:

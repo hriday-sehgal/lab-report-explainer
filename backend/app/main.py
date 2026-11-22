@@ -78,6 +78,8 @@ async def analyze_report(file: UploadFile = File(...)):
         analysis = service.analyze_pdf_bytes(content, filename=file.filename)
         return analysis
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Analysis pipeline error: {str(e)}")
 
 @app.get("/api/synthetic-reports")

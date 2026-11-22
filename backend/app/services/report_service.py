@@ -6,8 +6,20 @@ Deterministic Flag Engine -> Critical Panic Triggers -> Next-Step Router ->
 Grounded Bilingual Explanations -> Grounding Audit Layer.
 """
 
+import re
 import time
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
+
+def _safe_float(val: Any, default: Optional[float] = None) -> Optional[float]:
+    if val is None:
+        return default
+    if isinstance(val, (int, float)):
+        return float(val)
+    try:
+        cleaned = re.sub(r"[^\d\.\-]", "", str(val))
+        return float(cleaned) if cleaned else default
+    except Exception:
+        return default
 from backend.app.schemas.report_schema import (
     LabReportAnalysis,
     LabBiomarker,
@@ -54,15 +66,16 @@ class ReportAnalysisService:
         has_critical = False
         
         raw_biomarkers = raw_data.get("biomarkers", [])
-        for item in raw_biomarkers:
-            ref_low = item.get("reference_low")
-            ref_high = item.get("reference_high")
-            ref_text = item.get("reference_text", f"{ref_low} - {ref_high}")
+        for idx, item in enumerate(raw_biomarkers, start=1):
+            ref_low = _safe_float(item.get("reference_low"))
+            ref_high = _safe_float(item.get("reference_high"))
+            ref_text = item.get("reference_text") or (f"{ref_low} - {ref_high}" if ref_low is not None else "-")
+            val_num = _safe_float(item.get("value"), default=0.0)
             
             ref_range = ReferenceRange(low=ref_low, high=ref_high, text_range=ref_text)
             flag, is_crit, clinical_note = calculate_biomarker_flag(
-                test_name=item["test_name"],
-                value=float(item["value"]),
+                test_name=item.get("test_name", f"Test_{idx}"),
+                value=val_num,
                 reference_range=ref_range
             )
             
@@ -70,9 +83,9 @@ class ReportAnalysisService:
                 has_critical = True
                 
             validated_biomarkers.append(LabBiomarker(
-                item_id=item["item_id"],
-                test_name=item["test_name"],
-                value=float(item["value"]),
+                item_id=item.get("item_id", f"BIO-{idx:03d}"),
+                test_name=item.get("test_name", f"Test_{idx}"),
+                value=val_num,
                 unit=item.get("unit", ""),
                 reference_range=ref_range,
                 flag=flag,
