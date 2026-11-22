@@ -1,7 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.range-track {
-  background: linear-gradient(90deg, #93c5fd 0%, #86efac 20%, #86efac 80%, #fca5a5 100%);
-}
