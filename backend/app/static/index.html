@@ -233,6 +233,30 @@
           </div>
         </div>
 
+        <!-- SOURCE PDF DOCUMENT VIEWER CARD -->
+        <section class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+          <div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="h-6 w-6 rounded bg-red-50 text-red-600 flex items-center justify-center font-bold text-xs">PDF</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Source Pathology Document</span>
+              <span id="pdfViewerFileName" class="text-[11px] font-mono px-2 py-0.5 rounded bg-white text-slate-700 border border-slate-200">LAB-001.pdf</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btnTogglePdfViewer" onclick="togglePdfViewer()" class="px-2.5 py-1 text-xs font-semibold rounded-md border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 transition shadow-2xs">
+                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <span id="txtTogglePdf">Hide Viewer</span>
+              </button>
+              <a id="linkPdfNewTab" href="#" target="_blank" class="px-2.5 py-1 text-xs font-semibold rounded-md border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 transition">
+                <span>Full Page View</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+          <div id="pdfViewerContainer" class="p-4 bg-slate-100/70 border-b border-slate-200 transition-all">
+            <iframe id="pdfViewerFrame" class="w-full h-[520px] rounded-lg border border-slate-200 bg-white shadow-xs" src=""></iframe>
+          </div>
+        </section>
+
         <!-- PATIENT & SPECIMEN METADATA GRID -->
         <section class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
           <div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
@@ -522,6 +546,18 @@
       clearInterval(elapsedTimer);
     }
 
+    function togglePdfViewer() {
+      const box = document.getElementById("pdfViewerContainer");
+      const txt = document.getElementById("txtTogglePdf");
+      if (box.classList.contains("hidden")) {
+        box.classList.remove("hidden");
+        txt.textContent = "Hide Viewer";
+      } else {
+        box.classList.add("hidden");
+        txt.textContent = "Show Viewer";
+      }
+    }
+
     async function loadReport(repId) {
       // 1. Immediately hide previous report results and empty state
       document.getElementById("resultsContainer").classList.add("hidden");
@@ -534,12 +570,21 @@
       const activeBtn = document.getElementById(`btn-${repId}`);
       if (activeBtn) activeBtn.classList.add("ring-2", "ring-blue-500", "bg-blue-100", "font-bold");
 
+      // Update PDF Viewer with current preset
+      const pdfUrl = `/data/synthetic_reports/${repId}.pdf`;
+      const pdfFrame = document.getElementById("pdfViewerFrame");
+      if (pdfFrame) pdfFrame.src = pdfUrl;
+      const pdfLink = document.getElementById("linkPdfNewTab");
+      if (pdfLink) pdfLink.href = pdfUrl;
+      const pdfLabel = document.getElementById("pdfViewerFileName");
+      if (pdfLabel) pdfLabel.textContent = `${repId}.pdf`;
+
       startElapsedTimer();
       document.getElementById("activeProcessingReportName").textContent = `${repId}.pdf`;
       setPipelineProgress(15, "Reading PDF file & extracting binary streams...", 1);
 
       try {
-        const resp = await fetch(`/data/synthetic_reports/${repId}.pdf`);
+        const resp = await fetch(pdfUrl);
         const blob = await resp.blob();
         await uploadReportBlob(blob, `${repId}.pdf`);
       } catch (err) {
@@ -559,6 +604,15 @@
     };
 
     async function uploadReportBlob(blob, filename) {
+      // Update PDF viewer with user's uploaded blob
+      const blobUrl = URL.createObjectURL(blob);
+      const pdfFrame = document.getElementById("pdfViewerFrame");
+      if (pdfFrame) pdfFrame.src = blobUrl;
+      const pdfLink = document.getElementById("linkPdfNewTab");
+      if (pdfLink) pdfLink.href = blobUrl;
+      const pdfLabel = document.getElementById("pdfViewerFileName");
+      if (pdfLabel) pdfLabel.textContent = filename;
+
       document.getElementById("resultsContainer").classList.add("hidden");
       document.getElementById("emptyStateCard").classList.add("hidden");
       document.getElementById("livePipelineCard").classList.remove("hidden");
