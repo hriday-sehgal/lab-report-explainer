@@ -8,7 +8,7 @@ class Settings(BaseModel):
     app_name: str = "HeyDoc AI - Lab Report Explainer"
     version: str = "1.0.0"
     gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
     max_budget_inr: float = 500.0
     input_cost_per_m_tokens: float = 0.075   # USD
     output_cost_per_m_tokens: float = 0.300  # USD

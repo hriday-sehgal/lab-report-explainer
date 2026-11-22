@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-22 12:41:51",
+  "timestamp": "2026-11-22 12:46:10",
   "total_cases": 30,
   "metrics": {
     "extraction_accuracy_percent": 100.0,
@@ -184,7 +184,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.025
+      "latency": 0.037
     },
     {
       "case_id": "EVAL-017",
