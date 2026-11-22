@@ -1,14 +1,5 @@
-# HeyDoc AI — Agentic Lab Report Explainer (ADK 2.0 & Evals)
+# Agentic Lab Report Explainer (ADK 2.0 & Evals)
 
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-emerald.svg)](https://fastapi.tiangolo.com/)
-[![Google ADK 2.0](https://img.shields.io/badge/Google_ADK-2.0-blueviolet.svg)](https://cloud.google.com/)
-[![Gemini Flash](https://img.shields.io/badge/Gemini-3.5_Flash_Lite-orange.svg)](https://ai.google.dev/)
-[![Evaluation Pass](https://img.shields.io/badge/Evals-30%2F30_Passing-brightgreen.svg)](./evals/eval_results.json)
-[![Spend Status](https://img.shields.io/badge/Total_Spend-%3C_₹5.00_(Cap_₹500)-success.svg)](./AI_USAGE.md)
-
-> **Submission for AI Engineer (Forward-Deployed Engineering) — HeyDoc AI**  
-> **Candidate:** Hriday Sehgal ([hriday.career@gmail.com](mailto:hriday.career@gmail.com) | +91-9818045065)  
 > **GitHub:** [https://github.com/hriday-sehgal/lab-report-explainer](https://github.com/hriday-sehgal/lab-report-explainer)
 
 ---
@@ -183,23 +174,3 @@ The dashboard served at `http://localhost:8000` includes:
 - **30-Case Evals Scorecard Tab:** Live metrics and case-by-case pass/fail breakdown.
 
 ---
-
-## 8. Git Commit Discipline Verification
-
-As required by HeyDoc AI's rules:
-```bash
-$ git log --oneline --reverse
-ba1e801 feat: initial project plan and architecture (PLAN.md)
-```
-The first commit in the repository history is strictly **`PLAN.md`**, established before any application code was committed.
-
----
-
-## 9. Deliverables & Links
-
-- **Public GitHub Repository:** [https://github.com/hriday-sehgal/lab-report-explainer](https://github.com/hriday-sehgal/lab-report-explainer)
-- **Architecture & Project Plan:** [`PLAN.md`](./PLAN.md)
-- **AI Agent Workflow & Token Discipline:** [`AI_USAGE.md`](./AI_USAGE.md)
-- **Video Walkthrough (3-5 Minutes):** [Video Walkthrough Link](https://www.loom.com/) *(Screen walkthrough demonstrating upload, deterministic emergency banner, bilingual explanations, and 30-case evals)*
-- **Earliest Joining Date:** Immediate
-- **Notice Period:** 0 days / Immediate

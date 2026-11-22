@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-22 13:28:08",
+  "timestamp": "2026-11-22 19:34:05",
   "total_cases": 30,
   "metrics": {
     "extraction_accuracy_percent": 100.0,
@@ -184,7 +184,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.037
+      "latency": 0.039
     },
     {
       "case_id": "EVAL-017",
@@ -206,7 +206,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-019",
@@ -261,7 +261,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-024",
@@ -283,7 +283,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-026",
@@ -305,7 +305,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-028",
@@ -316,7 +316,7 @@
       "is_unsafe": false,
       "critical_triggered": true,
       "next_step": "doctor_consult",
-      "latency": 0.002
+      "latency": 0.003
     },
     {
       "case_id": "EVAL-029",
