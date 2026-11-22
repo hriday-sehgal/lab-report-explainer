@@ -29,7 +29,7 @@ def test_health_endpoint():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "healthy"
-    assert "HeyDoc AI" in data["service"]
+    assert "CarePulse AI" in data["service"]
 
 def test_deterministic_flag_engine_normal():
     ref = ReferenceRange(low=13.0, high=17.0)

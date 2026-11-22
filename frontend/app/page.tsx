@@ -10,7 +10,7 @@ export default function CareOSDashboard() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadPreset('LAB-001');
+    // Clean initial state without auto-select
     fetch('/evals/eval_results.json')
       .then((r) => r.json())
       .then((d) => setEvals(d))
