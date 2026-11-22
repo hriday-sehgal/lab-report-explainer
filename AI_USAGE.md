@@ -1,16 +1,10 @@
 # AI Usage & Engineering Workflow Specification
 
-**Candidate:** Hriday Sehgal ([hriday.career@gmail.com](mailto:hriday.career@gmail.com))  
-**Role:** AI Engineer (Forward-Deployed Engineering) — HeyDoc AI  
-**Challenge:** Agentic Lab Report Explainer with ADK 2.0 & Evals  
-
 ---
 
 ## 1. Operating Philosophy: "Plan First, Code Second, Verify Always"
 
-At HeyDoc AI, forward-deployed engineers build systems handling 15M+ patient interactions monthly. Building clinical AI agents at this scale requires zero tolerance for hallucinated medical diagnoses and rigorous token/context discipline.
-
-Our operating system for this take-home followed a 5-phase agentic loop:
+Our operating system for this take home followed a 5-phase agentic loop:
 ```
 [1. Structural Plan] -> [2. Deterministic Guardrails] -> [3. Context Minimization] -> [4. Eval Benchmark] -> [5. Iterative Refinement]
       (PLAN.md)           (Pure Code Safety Engine)        (Structured Data Only)         (30-Case Matrix)         (Root-Cause Fixes)
@@ -21,9 +15,9 @@ Our operating system for this take-home followed a 5-phase agentic loop:
 ## 2. Tools & Agentic Execution Stack
 
 1. **Agentic Orchestration Platform:**
-   - **Google Antigravity / Claude Code / Codex:** Used as the primary agentic pair-programmer for architectural design, schema enforcement, automated report generation, and continuous test execution.
+   - **Google Antigravity** Used as the primary agentic pair-programmer for architectural design, schema enforcement, automated report generation, and continuous test execution.
 2. **LLM Runtime & Foundation Models:**
-   - **Gemini 2.5 Flash:** Selected for high-throughput, low-latency ($< 1.8\text{s}$) biomarker extraction and natural bilingual phrasing.
+   - **Gemini 3.5 Flash Lite:** Selected for high-throughput, low-latency ($< 1.8\text{s}$) biomarker extraction and natural bilingual phrasing.
    - **Google ADK 2.0 / Google GenAI SDK (`google-genai`):** Used for strict JSON schema output formatting and tool execution.
 3. **Deterministic Safety Harness:**
    - **Pydantic v2:** Rigid type and schema validation.
@@ -94,7 +88,7 @@ When processing `HbA1c (Glycated Hemoglobin)`, the substring `"hemoglobin"` matc
 ## 6. Budget & Financial Ledger
 
 - **Hard Spend Cap:** $\text{₹}500.00\text{ INR}$
-- **Model:** Gemini 2.5 Flash ($\$0.075$ / 1M input tokens, $\$0.300$ / 1M output tokens)
+- **Model:** Gemini 3.5 Flash Lite 
 - **Measured Evaluation Suite Spend:**
   - 15 Synthetic report test runs: $\approx \text{₹}0.52\text{ INR}$
   - 30-Case comprehensive evaluation suite runs: $\approx \text{₹}1.05\text{ INR}$

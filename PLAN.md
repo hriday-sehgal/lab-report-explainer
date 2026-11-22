@@ -1,9 +1,5 @@
 # Lab Report Explainer — Production Architecture & Project Plan
 
-**Candidate:** Hriday Sehgal  
-**Target Role:** AI Engineer/ Full Stack Engineer/ Forward Deployed Engineer  
-**System:** Agentic Lab Report Explainer with ADK 2.0 & Evals  
-
 ---
 
 ## 1. Executive Summary & Problem Definition 
@@ -214,7 +210,7 @@ class LabReportAnalysis(BaseModel):
   "disclaimer_hi": "यह AI सारांश केवल जानकारी के लिए है और कोई चिकित्सीय निदान नहीं है। हमेशा एक योग्य डॉक्टर से परामर्श करें।",
   "processing_metadata": {
     "latency_seconds": 2.45,
-    "model": "gemini-2.5-flash",
+    "model": "gemini-3.5-flash-lite",
     "total_tokens": 1280,
     "estimated_cost_inr": 0.18
   }
@@ -280,7 +276,7 @@ HeyDoc allocates **25 out of 100 points** to evaluation rigor. We structure the 
 ## 8. Latency & Token Cost Model (Budget Ceiling: ₹500)
 
 ### 8.1 Model Selection & Pricing
-We utilize **Gemini 2.5 Flash** (via Google Vertex AI / Google GenAI SDK):
+We utilize **Gemini 3.5 Flash Lite** (via Google Vertex AI / Google GenAI SDK):
 - **Input Pricing:** \$0.075 per 1,000,000 tokens ($\approx \text{₹}0.0063$ per 1k tokens)
 - **Output Pricing:** \$0.300 per 1,000,000 tokens ($\approx \text{₹}0.0252$ per 1k tokens)
 

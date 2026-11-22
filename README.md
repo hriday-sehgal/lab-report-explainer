@@ -3,7 +3,7 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-emerald.svg)](https://fastapi.tiangolo.com/)
 [![Google ADK 2.0](https://img.shields.io/badge/Google_ADK-2.0-blueviolet.svg)](https://cloud.google.com/)
-[![Gemini Flash](https://img.shields.io/badge/Gemini-2.5_Flash-orange.svg)](https://ai.google.dev/)
+[![Gemini Flash](https://img.shields.io/badge/Gemini-3.5_Flash_Lite-orange.svg)](https://ai.google.dev/)
 [![Evaluation Pass](https://img.shields.io/badge/Evals-30%2F30_Passing-brightgreen.svg)](./evals/eval_results.json)
 [![Spend Status](https://img.shields.io/badge/Total_Spend-%3C_₹5.00_(Cap_₹500)-success.svg)](./AI_USAGE.md)
 
@@ -18,7 +18,7 @@
 Diagnostic laboratory reports (CBC, Lipid Profile, HbA1c, Thyroid, LFT) are inherently dense and intimidating for patients. When individuals try interpreting their raw biomarkers using unconstrained AI chatbots or search engines, they risk receiving anxiety-inducing speculative diagnoses (e.g. mistaking mildly elevated ALT for liver failure) or failing to recognize life-threatening critical panic values (e.g. Platelets $< 20,000/\mu\text{L}$).
 
 This project implements an **Agentic Care Operating System** component for diagnostics labs:
-1. **Schema-Validated Ingestion:** Extracts biomarker data from PDFs into structured, typed JSON using **Google ADK 2.0 & Gemini 2.5 Flash**.
+1. **Schema-Validated Ingestion:** Extracts biomarker data from PDFs into structured, typed JSON using **Google ADK 2.0 & Gemini 3.5 Flash Lite**.
 2. **Deterministic Clinical Safety Layer:** 100% pure Python arithmetic evaluates laboratory-specific reference ranges and critical panic thresholds—never delegated to probabilistic LLM arithmetic.
 3. **Grounded Bilingual Explanations:** Produces plain-language English and natural conversational Hindi explanations. **Every single statement strictly cites an extracted biomarker ID** (`evidence_item_ids`).
 4. **Strict Anti-Diagnosis Mandate:** SaMD-compliant; never issues clinical diagnoses (e.g., *"You have diabetes"* is strictly forbidden and rejected by automated safety filters).
@@ -39,7 +39,7 @@ This project implements an **Agentic Care Operating System** component for diagn
 +-----------------------------------------------------------------------------------+
 |                        INGESTION & EXTRACTION LAYER                               |
 |   1. Local Text & Table Extraction (PyMuPDF / pypdf sequential parser)            |
-|   2. Google ADK 2.0 Agent (Gemini 2.5 Flash): Structured JSON Extraction          |
+|   2. Google ADK 2.0 Agent (Gemini 3.5 Flash Lite): Structured JSON Extraction     |
 |   3. Pydantic v2 Validator: Rigid typing, units, ranges, and nullability          |
 +------------------------------------------+----------------------------------------+
                                            | Validated Biomarker JSON
@@ -121,7 +121,7 @@ During initial evaluation of Case 7 (`LAB-007`) and Case 13 (`LAB-013`):
 ## 5. Token Economics & LLM Budget ($< \text{₹}500$)
 
 HeyDoc AI requires keeping LLM spend under $\text{₹}500$ and detailing the actual spend:
-- **Model Selected:** `gemini-2.5-flash` ($0.075 / 1M input tokens, $0.300 / 1M output tokens).
+- **Model Selected:** `gemini-3.5-flash-lite` (failover: `gemini-3.5-flash`) ($0.075 / 1M input tokens, $0.300 / 1M output tokens).
 - **Context Minimization:** Local PDF text parsing eliminates large image/vision payload transfers, saving $> 85\%$ in token usage.
 - **Actual Total Spend Across Development & Evals:**
   - 15 Synthetic report test runs: $\approx \text{₹}0.52\text{ INR}$
