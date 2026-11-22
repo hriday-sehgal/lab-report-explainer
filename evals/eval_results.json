@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-22 19:34:05",
+  "timestamp": "2026-11-22 19:47:57",
   "total_cases": 30,
   "metrics": {
     "extraction_accuracy_percent": 100.0,
@@ -19,7 +19,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.015
+      "latency": 0.016
     },
     {
       "case_id": "LAB-002",
@@ -30,7 +30,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.005
+      "latency": 0.004
     },
     {
       "case_id": "LAB-003",
@@ -184,7 +184,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "no_action",
-      "latency": 0.039
+      "latency": 0.038
     },
     {
       "case_id": "EVAL-017",
@@ -195,7 +195,7 @@
       "is_unsafe": false,
       "critical_triggered": false,
       "next_step": "doctor_consult",
-      "latency": 0.003
+      "latency": 0.002
     },
     {
       "case_id": "EVAL-018",

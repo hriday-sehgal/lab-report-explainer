@@ -130,6 +130,65 @@ class ExtractorAgent:
         # Deterministic regex parser fallback (guarantees zero-network execution, no hanging, and offline evals)
         return self._deterministic_extract(report_text, start_time)
 
+    def extract_from_pdf_bytes(self, pdf_bytes: bytes) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """
+        Multimodal extraction fallback for scanned image PDFs lacking embedded text layers.
+        Passes raw PDF bytes directly to Gemini 3.5 vision parser.
+        """
+        start_time = time.perf_counter()
+        if self.client:
+            models_to_try = [settings.gemini_model, "gemini-3.5-flash"]
+            for model_name in models_to_try:
+                try:
+                    response = self.client.models.generate_content(
+                        model=model_name,
+                        contents=[
+                            types.Part.from_bytes(data=pdf_bytes, mime_type="application/pdf"),
+                            EXTRACTION_SYSTEM_PROMPT
+                        ],
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json"
+                        )
+                    )
+                    latency = time.perf_counter() - start_time
+                    resp_text = (response.text or "").strip()
+                    resp_text = re.sub(r"^```(?:json)?\s*", "", resp_text, flags=re.MULTILINE)
+                    resp_text = re.sub(r"\s*```$", "", resp_text, flags=re.MULTILINE)
+                    
+                    raw_json = json.loads(resp_text)
+                    if raw_json.get("biomarkers"):
+                        usage = getattr(response, "usage_metadata", None)
+                        in_tokens = getattr(usage, "prompt_token_count", 1500) if usage else 1500
+                        out_tokens = getattr(usage, "candidates_token_count", 400) if usage else 400
+                        cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
+                                   (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
+                        cost_inr = cost_usd * settings.usd_to_inr
+                        return raw_json, {
+                            "latency_seconds": round(latency, 3),
+                            "model_used": model_name,
+                            "execution_mode": "LIVE_LLM_VISION",
+                            "is_live_llm": True,
+                            "engine_label": f"Live Gemini Vision LLM ({model_name})",
+                            "input_tokens": in_tokens,
+                            "output_tokens": out_tokens,
+                            "estimated_cost_inr": round(cost_inr, 4)
+                        }
+                except Exception as e:
+                    print(f"[ExtractorAgent] Multimodal extraction failed on {model_name}: {e}")
+                    continue
+
+        return {"report_id": "SCANNED_DOC", "report_type": "GENERAL", "biomarkers": []}, {
+            "latency_seconds": round(time.perf_counter() - start_time, 3),
+            "model_used": "deterministic-clinical-engine",
+            "execution_mode": "DETERMINISTIC_FALLBACK",
+            "is_live_llm": False,
+            "engine_label": "Deterministic Safe Engine",
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "estimated_cost_inr": 0.0
+        }
+
     def _deterministic_extract(self, text: str, start_time: float) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         latency = time.perf_counter() - start_time
         

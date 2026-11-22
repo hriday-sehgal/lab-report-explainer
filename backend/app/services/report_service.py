@@ -53,13 +53,16 @@ class ReportAnalysisService:
     def analyze_pdf_bytes(self, pdf_bytes: bytes, filename: str = "report.pdf") -> LabReportAnalysis:
         pipeline_start = time.perf_counter()
         
-        # 1. Parse text from PDF
+        # 1. Parse text from PDF locally (fast, token-efficient CPU extraction)
         text, pdf_meta = PDFParserService.extract_text_from_pdf_bytes(pdf_bytes)
-        if not text:
-            raise ValueError("Could not extract readable text from the provided PDF.")
-            
-        # 2. Extract structured data
-        raw_data, extract_perf = self.extractor.extract_from_text(text)
+        
+        # 2. Extract structured data: use text parser if text layer exists; fallback to multimodal vision if scanned image
+        if text and len(text.strip()) > 15:
+            raw_data, extract_perf = self.extractor.extract_from_text(text)
+        else:
+            raw_data, extract_perf = self.extractor.extract_from_pdf_bytes(pdf_bytes)
+            if not raw_data.get("biomarkers"):
+                raise ValueError("Could not extract diagnostic biomarkers from the provided PDF. Please ensure the document is a readable laboratory pathology report.")
         
         # 3. Deterministic Flag and Clinical Evaluation
         validated_biomarkers: List[LabBiomarker] = []
