@@ -1,0 +1,44 @@
+{
+  "report_id": "LAB-010",
+  "panel_name": "THYROID PROFILE - TOTAL",
+  "report_type": "THYROID",
+  "patient": {
+    "name": "Deepak Bhatia",
+    "age": 41,
+    "gender": "Male",
+    "id": "PT-1010",
+    "ref_dr": "Dr. G. Oberoi"
+  },
+  "date": "2026-11-20",
+  "notes": "Low TSH finding with clinical palpitations.",
+  "tests": [
+    {
+      "test_name": "Thyroid Stimulating Hormone (TSH)",
+      "value": 0.08,
+      "unit": "uIU/mL",
+      "ref_low": 0.45,
+      "ref_high": 4.5,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Triiodothyronine (T3)",
+      "value": 2.45,
+      "unit": "ng/mL",
+      "ref_low": 0.8,
+      "ref_high": 2.0,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Thyroxine (T4)",
+      "value": 15.8,
+      "unit": "ug/dL",
+      "ref_low": 5.1,
+      "ref_high": 14.1,
+      "expected_flag": "high",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}

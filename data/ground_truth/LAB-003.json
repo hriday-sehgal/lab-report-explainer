@@ -1,0 +1,44 @@
+{
+  "report_id": "LAB-003",
+  "panel_name": "COMPLETE BLOOD COUNT (CBC) - CRITICAL VALUE",
+  "report_type": "CBC",
+  "patient": {
+    "name": "Rohan Deshmukh",
+    "age": 42,
+    "gender": "Male",
+    "id": "PT-1003",
+    "ref_dr": "Emergency Clinic"
+  },
+  "date": "2026-11-17",
+  "notes": "CRITICAL PANIC VALUE ALERT: Severe thrombocytopenia detected.",
+  "tests": [
+    {
+      "test_name": "Hemoglobin",
+      "value": 13.2,
+      "unit": "g/dL",
+      "ref_low": 13.0,
+      "ref_high": 17.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Leukocyte Count (WBC)",
+      "value": 5400,
+      "unit": "/uL",
+      "ref_low": 4000,
+      "ref_high": 11000,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Platelet Count",
+      "value": 14000,
+      "unit": "/uL",
+      "ref_low": 150000,
+      "ref_high": 450000,
+      "expected_flag": "critical_low",
+      "is_critical": true
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}

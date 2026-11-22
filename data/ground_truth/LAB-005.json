@@ -1,0 +1,53 @@
+{
+  "report_id": "LAB-005",
+  "panel_name": "LIPID PROFILE - FASTING",
+  "report_type": "LIPID",
+  "patient": {
+    "name": "Vikram Malhotra",
+    "age": 52,
+    "gender": "Male",
+    "id": "PT-1005",
+    "ref_dr": "Dr. A. B. Joshi"
+  },
+  "date": "2026-11-18",
+  "notes": "Elevated atherogenic lipoprotein markers.",
+  "tests": [
+    {
+      "test_name": "Total Cholesterol",
+      "value": 248.0,
+      "unit": "mg/dL",
+      "ref_low": 125.0,
+      "ref_high": 200.0,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "HDL Cholesterol",
+      "value": 36.0,
+      "unit": "mg/dL",
+      "ref_low": 40.0,
+      "ref_high": 60.0,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "LDL Cholesterol",
+      "value": 164.0,
+      "unit": "mg/dL",
+      "ref_low": 50.0,
+      "ref_high": 100.0,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "Triglycerides",
+      "value": 240.0,
+      "unit": "mg/dL",
+      "ref_low": 50.0,
+      "ref_high": 150.0,
+      "expected_flag": "high",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}

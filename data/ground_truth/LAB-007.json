@@ -1,0 +1,35 @@
+{
+  "report_id": "LAB-007",
+  "panel_name": "DIABETES MONITORING (HbA1c & GLUCOSE)",
+  "report_type": "HBA1C",
+  "patient": {
+    "name": "Ananya Sen",
+    "age": 26,
+    "gender": "Female",
+    "id": "PT-1007",
+    "ref_dr": "Dr. M. Roy"
+  },
+  "date": "2026-11-19",
+  "notes": "Non-diabetic reference parameters confirmed.",
+  "tests": [
+    {
+      "test_name": "HbA1c (Glycated Hemoglobin)",
+      "value": 5.2,
+      "unit": "%",
+      "ref_low": 4.0,
+      "ref_high": 5.6,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Estimated Average Glucose (eAG)",
+      "value": 103.0,
+      "unit": "mg/dL",
+      "ref_low": 70.0,
+      "ref_high": 115.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "no_action"
+}

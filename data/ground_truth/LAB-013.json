@@ -1,0 +1,53 @@
+{
+  "report_id": "LAB-013",
+  "panel_name": "METABOLIC HEALTH PANEL (HbA1c & LIPID)",
+  "report_type": "MULTI",
+  "patient": {
+    "name": "Siddharth Jain",
+    "age": 49,
+    "gender": "Male",
+    "id": "PT-1013",
+    "ref_dr": "Dr. N. K. Bansal"
+  },
+  "date": "2026-11-21",
+  "notes": "Combined metabolic screening.",
+  "tests": [
+    {
+      "test_name": "HbA1c (Glycated Hemoglobin)",
+      "value": 6.8,
+      "unit": "%",
+      "ref_low": 4.0,
+      "ref_high": 5.6,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Cholesterol",
+      "value": 218.0,
+      "unit": "mg/dL",
+      "ref_low": 125.0,
+      "ref_high": 200.0,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "Triglycerides",
+      "value": 210.0,
+      "unit": "mg/dL",
+      "ref_low": 50.0,
+      "ref_high": 150.0,
+      "expected_flag": "high",
+      "is_critical": false
+    },
+    {
+      "test_name": "HDL Cholesterol",
+      "value": 38.0,
+      "unit": "mg/dL",
+      "ref_low": 40.0,
+      "ref_high": 60.0,
+      "expected_flag": "low",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}

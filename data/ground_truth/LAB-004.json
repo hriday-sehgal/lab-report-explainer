@@ -1,0 +1,62 @@
+{
+  "report_id": "LAB-004",
+  "panel_name": "LIPID PROFILE - FASTING",
+  "report_type": "LIPID",
+  "patient": {
+    "name": "Sunita Verma",
+    "age": 45,
+    "gender": "Female",
+    "id": "PT-1004",
+    "ref_dr": "Dr. R. K. Saxena"
+  },
+  "date": "2026-11-17",
+  "notes": "12 hours overnight fasting. Routine annual lipid assessment.",
+  "tests": [
+    {
+      "test_name": "Total Cholesterol",
+      "value": 175.0,
+      "unit": "mg/dL",
+      "ref_low": 125.0,
+      "ref_high": 200.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "HDL Cholesterol",
+      "value": 52.0,
+      "unit": "mg/dL",
+      "ref_low": 40.0,
+      "ref_high": 60.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "LDL Cholesterol",
+      "value": 96.0,
+      "unit": "mg/dL",
+      "ref_low": 50.0,
+      "ref_high": 100.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Triglycerides",
+      "value": 135.0,
+      "unit": "mg/dL",
+      "ref_low": 50.0,
+      "ref_high": 150.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "VLDL Cholesterol",
+      "value": 27.0,
+      "unit": "mg/dL",
+      "ref_low": 5.0,
+      "ref_high": 30.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "no_action"
+}

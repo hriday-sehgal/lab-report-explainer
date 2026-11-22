@@ -1,28 +1,28 @@
 # Lab Report Explainer — Production Architecture & Project Plan
 
-**Candidate:** Hriday Sehgal ([hriday.career@gmail.com](mailto:hriday.career@gmail.com))  
-**Target Role:** AI Engineer — HeyDoc AI (Forward-Deployed Engineering)  
+**Candidate:** Hriday Sehgal  
+**Target Role:** AI Engineer/ Full Stack Engineer/ Forward Deployed Engineer  
 **System:** Agentic Lab Report Explainer with ADK 2.0 & Evals  
 
 ---
 
-## 1. Executive Summary & Problem Definition
+## 1. Executive Summary & Problem Definition 
 
 ### 1.1 The Problem
-Diagnostic laboratory reports are notoriously complex, dense, and cryptic for ordinary patients. When patients receive their blood work (CBC, Lipid Panel, HbA1c, Thyroid, LFT), they are confronted with raw numerical biomarkers, unfamiliar measurement units (e.g., $\mu\text{IU/mL}$, $\text{mg/dL}$), and lab-specific reference ranges. 
+Diagnostic laboratory reports are complex, dense, and cryptic for ordinary patients. When patients receive their blood work (CBC, Lipid Panel, HbA1c, Thyroid, LFT), they are confronted with raw numerical biomarkers, unfamiliar measurement units (e.g., $\mu\text{IU/mL}$, $\text{mg/dL}$), and lab-specific reference ranges. 
 
 This information asymmetry leads to two dangerous failure modes:
 1. **Unwarranted Panic & Cognitive Overload:** Patients search search engines or unconstrained AI chatbots for borderline abnormal numbers, receiving alarmist speculative diagnoses (e.g., mistaking mildly elevated ALT for acute liver failure).
 2. **Delayed Intervention on Critical Values:** Patients fail to recognize life-threatening "panic values" (e.g., severe thrombocytopenia with Platelets $< 20,000/\mu\text{L}$), delaying emergency clinical intervention.
 
 ### 1.2 The Solution
-An enterprise-grade, deterministic-first AI pipeline designed for diagnostics labs and hospital networks:
+An enterprise grade, deterministic-first AI pipeline designed for diagnostics labs and hospital networks:
 - Ingests lab reports (PDF/images) across five core diagnostic panels (CBC, Lipid, HbA1c, Thyroid, LFT).
 - Extracts structured clinical biomarkers into a strictly schema-validated JSON format via Google ADK 2.0 and Gemini.
 - Enforces a **deterministic safety and flag engine**: flags (normal, high, low, critical) and clinical triggers are computed with pure code logic against laboratory reference intervals—never delegated to probabilistic LLM arithmetic.
 - Produces plain-language, bilingual (English & Hindi) explanations strictly grounded in extracted data. Every statement cites its source biomarker ID.
 - Restricts actionable next steps to a closed, clinically governed enum (`doctor_consult`, `follow_up_test_package`, `no_action`).
-- Includes a rigorous 30-case evaluation suite tracking field extraction accuracy, flag correctness, grounding rate, unsafe-advice rate, per-report latency, and token economics (budget $< \text{₹}500$).
+- Includes a rigorous 30-case evaluation suite tracking field extraction accuracy, flag correctness, grounding rate, unsafe-advice rate, per-report latency, and token economics.
 
 ---
 
@@ -74,7 +74,7 @@ The system adheres to a strict separation of concerns: **Probabilistic AI handle
 +-----------------------------------------------------------------------------------+
 |                             API & PRESENTATION LAYER                              |
 |   1. FastAPI Backend: RESTful endpoints (/api/reports/analyze, /api/health)       |
-|   2. Next.js 14 / Tailwind UI: Interactive bilingual view, visual flags, metrics  |
+|   2. Next.js / Tailwind UI: Interactive bilingual view, visual flags, metrics  |
 +-----------------------------------------------------------------------------------+
 ```
 

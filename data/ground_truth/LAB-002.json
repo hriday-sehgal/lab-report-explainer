@@ -1,0 +1,62 @@
+{
+  "report_id": "LAB-002",
+  "panel_name": "COMPLETE BLOOD COUNT (CBC)",
+  "report_type": "CBC",
+  "patient": {
+    "name": "Priya Nair",
+    "age": 31,
+    "gender": "Female",
+    "id": "PT-1002",
+    "ref_dr": "Dr. S. K. Gupta"
+  },
+  "date": "2026-11-16",
+  "notes": "Patient complains of generalized fatigue and lethargy.",
+  "tests": [
+    {
+      "test_name": "Hemoglobin",
+      "value": 9.4,
+      "unit": "g/dL",
+      "ref_low": 12.0,
+      "ref_high": 15.0,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "RBC Count",
+      "value": 3.7,
+      "unit": "mil/uL",
+      "ref_low": 3.8,
+      "ref_high": 4.8,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "Packed Cell Volume (PCV)",
+      "value": 31.0,
+      "unit": "%",
+      "ref_low": 36.0,
+      "ref_high": 46.0,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Leukocyte Count (WBC)",
+      "value": 7200,
+      "unit": "/uL",
+      "ref_low": 4000,
+      "ref_high": 11000,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Platelet Count",
+      "value": 210000,
+      "unit": "/uL",
+      "ref_low": 150000,
+      "ref_high": 450000,
+      "expected_flag": "normal",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}

@@ -1,0 +1,62 @@
+{
+  "report_id": "LAB-001",
+  "panel_name": "COMPLETE BLOOD COUNT (CBC)",
+  "report_type": "CBC",
+  "patient": {
+    "name": "Aarav Sharma",
+    "age": 28,
+    "gender": "Male",
+    "id": "PT-1001",
+    "ref_dr": "Self / Wellness"
+  },
+  "date": "2026-11-15",
+  "notes": "Routine health checkup. Patient asymptomatic.",
+  "tests": [
+    {
+      "test_name": "Hemoglobin",
+      "value": 14.8,
+      "unit": "g/dL",
+      "ref_low": 13.0,
+      "ref_high": 17.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "RBC Count",
+      "value": 4.9,
+      "unit": "mil/uL",
+      "ref_low": 4.5,
+      "ref_high": 5.9,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Packed Cell Volume (PCV)",
+      "value": 44.0,
+      "unit": "%",
+      "ref_low": 40.0,
+      "ref_high": 50.0,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Leukocyte Count (WBC)",
+      "value": 6800,
+      "unit": "/uL",
+      "ref_low": 4000,
+      "ref_high": 11000,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Platelet Count",
+      "value": 240000,
+      "unit": "/uL",
+      "ref_low": 150000,
+      "ref_high": 450000,
+      "expected_flag": "normal",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "no_action"
+}

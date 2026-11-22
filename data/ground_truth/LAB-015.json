@@ -1,0 +1,62 @@
+{
+  "report_id": "LAB-015",
+  "panel_name": "COMPLETE BLOOD COUNT (CBC) - CRITICAL VALUE",
+  "report_type": "CBC",
+  "patient": {
+    "name": "Fatima Begum",
+    "age": 67,
+    "gender": "Female",
+    "id": "PT-1015",
+    "ref_dr": "Emergency Medical Dept"
+  },
+  "date": "2026-11-21",
+  "notes": "CRITICAL PANIC VALUE ALERT: Severe life-threatening anemia.",
+  "tests": [
+    {
+      "test_name": "Hemoglobin",
+      "value": 5.6,
+      "unit": "g/dL",
+      "ref_low": 12.0,
+      "ref_high": 15.0,
+      "expected_flag": "critical_low",
+      "is_critical": true
+    },
+    {
+      "test_name": "RBC Count",
+      "value": 1.9,
+      "unit": "mil/uL",
+      "ref_low": 3.8,
+      "ref_high": 4.8,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "Packed Cell Volume (PCV)",
+      "value": 17.5,
+      "unit": "%",
+      "ref_low": 36.0,
+      "ref_high": 46.0,
+      "expected_flag": "low",
+      "is_critical": false
+    },
+    {
+      "test_name": "Total Leukocyte Count (WBC)",
+      "value": 5200,
+      "unit": "/uL",
+      "ref_low": 4000,
+      "ref_high": 11000,
+      "expected_flag": "normal",
+      "is_critical": false
+    },
+    {
+      "test_name": "Platelet Count",
+      "value": 185000,
+      "unit": "/uL",
+      "ref_low": 150000,
+      "ref_high": 450000,
+      "expected_flag": "normal",
+      "is_critical": false
+    }
+  ],
+  "expected_next_step": "doctor_consult"
+}
