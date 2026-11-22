@@ -90,29 +90,73 @@
         <div class="mt-3.5 space-y-2.5">
           <div class="flex flex-wrap items-center gap-1.5 text-xs">
             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider w-24">Hematology:</span>
-            <button onclick="loadReport('LAB-001')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition">LAB-001: CBC Normal</button>
-            <button onclick="loadReport('LAB-002')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-002: CBC Low Hgb</button>
-            <button onclick="loadReport('LAB-003')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition">LAB-003: CBC Critical Platelets</button>
-            <button onclick="loadReport('LAB-014')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-014: High WBC</button>
-            <button onclick="loadReport('LAB-015')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition">LAB-015: Critical Anemia</button>
+            <button id="btn-LAB-001" onclick="loadReport('LAB-001')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition flex items-center gap-1.5">LAB-001: CBC Normal</button>
+            <button id="btn-LAB-002" onclick="loadReport('LAB-002')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-002: CBC Low Hgb</button>
+            <button id="btn-LAB-003" onclick="loadReport('LAB-003')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition flex items-center gap-1.5">LAB-003: CBC Critical Platelets</button>
+            <button id="btn-LAB-014" onclick="loadReport('LAB-014')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-014: High WBC</button>
+            <button id="btn-LAB-015" onclick="loadReport('LAB-015')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition flex items-center gap-1.5">LAB-015: Critical Anemia</button>
           </div>
 
           <div class="flex flex-wrap items-center gap-1.5 text-xs">
             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider w-24">Biochemistry:</span>
-            <button onclick="loadReport('LAB-004')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition">LAB-004: Lipid Normal</button>
-            <button onclick="loadReport('LAB-005')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-005: High LDL</button>
-            <button onclick="loadReport('LAB-006')" class="req-btn px-2.5 py-1 rounded-md border border-blue-200 hover:border-blue-400 text-blue-900 bg-blue-50 hover:bg-blue-100 transition">LAB-006: High Triglycerides (Follow-up)</button>
-            <button onclick="loadReport('LAB-011')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-011: LFT Elevated ALT</button>
-            <button onclick="loadReport('LAB-012')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition">LAB-012: Critical Bilirubin</button>
+            <button id="btn-LAB-004" onclick="loadReport('LAB-004')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition flex items-center gap-1.5">LAB-004: Lipid Normal</button>
+            <button id="btn-LAB-005" onclick="loadReport('LAB-005')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-005: High LDL</button>
+            <button id="btn-LAB-006" onclick="loadReport('LAB-006')" class="req-btn px-2.5 py-1 rounded-md border border-blue-200 hover:border-blue-400 text-blue-900 bg-blue-50 hover:bg-blue-100 transition flex items-center gap-1.5">LAB-006: High Triglycerides</button>
+            <button id="btn-LAB-011" onclick="loadReport('LAB-011')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-011: LFT Elevated ALT</button>
+            <button id="btn-LAB-012" onclick="loadReport('LAB-012')" class="req-btn px-2.5 py-1 rounded-md border border-red-300 hover:border-red-500 text-red-700 bg-red-50 hover:bg-red-100 font-semibold transition flex items-center gap-1.5">LAB-012: Critical Bilirubin</button>
           </div>
 
           <div class="flex flex-wrap items-center gap-1.5 text-xs">
             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider w-24">Endocrine:</span>
-            <button onclick="loadReport('LAB-007')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition">LAB-007: HbA1c Normal</button>
-            <button onclick="loadReport('LAB-008')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-008: HbA1c Diabetic</button>
-            <button onclick="loadReport('LAB-009')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-009: High TSH</button>
-            <button onclick="loadReport('LAB-010')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-010: Low TSH</button>
-            <button onclick="loadReport('LAB-013')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition">LAB-013: Metabolic Multi-Panel</button>
+            <button id="btn-LAB-007" onclick="loadReport('LAB-007')" class="req-btn px-2.5 py-1 rounded-md border border-slate-200 hover:border-slate-400 text-slate-700 bg-slate-50 hover:bg-slate-100 transition flex items-center gap-1.5">LAB-007: HbA1c Normal</button>
+            <button id="btn-LAB-008" onclick="loadReport('LAB-008')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-008: HbA1c Diabetic</button>
+            <button id="btn-LAB-009" onclick="loadReport('LAB-009')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-009: High TSH</button>
+            <button id="btn-LAB-010" onclick="loadReport('LAB-010')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-010: Low TSH</button>
+            <button id="btn-LAB-013" onclick="loadReport('LAB-013')" class="req-btn px-2.5 py-1 rounded-md border border-amber-200 hover:border-amber-400 text-amber-900 bg-amber-50 hover:bg-amber-100 transition flex items-center gap-1.5">LAB-013: Metabolic Multi-Panel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE PIPELINE PROCESSING CARD (ACTIVATES ON CLICK) -->
+      <section id="livePipelineCard" class="hidden bg-slate-900 text-white rounded-xl border border-blue-500/40 p-5 shadow-lg space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center animate-spin">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Executing Agentic Pipeline</span>
+                <span id="activeProcessingReportName" class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800">LAB-001.pdf</span>
+              </div>
+              <h3 id="pipelineStatusText" class="text-sm font-bold text-white mt-0.5">Initializing Document Processing &amp; Model Orchestration...</h3>
+            </div>
+          </div>
+          <span id="pipelineProgressPct" class="text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-blue-400">25%</span>
+        </div>
+
+        <!-- Animated Progress Track -->
+        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+          <div id="pipelineProgressBar" class="bg-gradient-to-r from-blue-500 to-emerald-400 h-1.5 rounded-full transition-all duration-300 ease-out" style="width: 25%"></div>
+        </div>
+
+        <!-- 4 Sequential Stages -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs pt-1">
+          <div id="stepBox1" class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center gap-2 text-slate-300">
+            <span id="stepIcon1" class="h-5 w-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+            <span class="truncate">PDF Text &amp; Cell Ingestion</span>
+          </div>
+          <div id="stepBox2" class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center gap-2 text-slate-400">
+            <span id="stepIcon2" class="h-5 w-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-[10px] font-bold">2</span>
+            <span class="truncate">ADK 2.0 / Gemini Agent</span>
+          </div>
+          <div id="stepBox3" class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center gap-2 text-slate-400">
+            <span id="stepIcon3" class="h-5 w-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-[10px] font-bold">3</span>
+            <span class="truncate">Deterministic Panic Engine</span>
+          </div>
+          <div id="stepBox4" class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center gap-2 text-slate-400">
+            <span id="stepIcon4" class="h-5 w-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-[10px] font-bold">4</span>
+            <span class="truncate">Grounded Citations (EN/HI)</span>
           </div>
         </div>
       </section>
@@ -402,32 +446,106 @@
       if (reportData) renderAnalysis(reportData);
     }
 
+    let pipelineTimer = null;
+
+    function setPipelineProgress(pct, statusText, currentStep) {
+      const card = document.getElementById("livePipelineCard");
+      card.classList.remove("hidden");
+      document.getElementById("pipelineProgressPct").textContent = pct + "%";
+      document.getElementById("pipelineProgressBar").style.width = pct + "%";
+      document.getElementById("pipelineStatusText").textContent = statusText;
+
+      for (let s = 1; s <= 4; s++) {
+        const box = document.getElementById(`stepBox${s}`);
+        const icon = document.getElementById(`stepIcon${s}`);
+        if (s < currentStep) {
+          box.className = "p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 flex items-center gap-2";
+          icon.className = "h-5 w-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold";
+          icon.textContent = "✓";
+        } else if (s === currentStep) {
+          box.className = "p-2.5 rounded-lg bg-blue-950/80 border border-blue-600 text-white flex items-center gap-2 font-bold animate-pulse";
+          icon.className = "h-5 w-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold";
+          icon.textContent = s;
+        } else {
+          box.className = "p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center gap-2 text-slate-500";
+          icon.className = "h-5 w-5 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[10px] font-bold";
+          icon.textContent = s;
+        }
+      }
+    }
+
     async function loadReport(repId) {
+      // Highlight active button and show processing
+      document.querySelectorAll(".req-btn").forEach(b => b.classList.remove("ring-2", "ring-blue-500", "bg-blue-100"));
+      const activeBtn = document.getElementById(`btn-${repId}`);
+      if (activeBtn) {
+        activeBtn.classList.add("ring-2", "ring-blue-500", "bg-blue-100");
+      }
+
+      document.getElementById("activeProcessingReportName").textContent = `${repId}.pdf`;
+      setPipelineProgress(15, "Reading PDF file & extracting binary streams...", 1);
+
       try {
         const resp = await fetch(`/data/synthetic_reports/${repId}.pdf`);
         const blob = await resp.blob();
         await uploadReportBlob(blob, `${repId}.pdf`);
       } catch (err) {
         console.error(err);
+        alert("Could not load report: " + err.message);
+        document.getElementById("livePipelineCard").classList.add("hidden");
       }
     }
 
     const pdfInput = document.getElementById("pdfUploadInput");
     pdfInput.onchange = (e) => {
-      if (e.target.files.length) uploadReportBlob(e.target.files[0], e.target.files[0].name);
+      if (e.target.files.length) {
+        document.getElementById("activeProcessingReportName").textContent = e.target.files[0].name;
+        uploadReportBlob(e.target.files[0], e.target.files[0].name);
+      }
     };
 
     async function uploadReportBlob(blob, filename) {
+      setPipelineProgress(35, "Calling Google ADK 2.0 / Gemini Agent for Structured Extraction...", 2);
+
+      // Start staged progress simulation while waiting for API
+      let p = 35;
+      clearInterval(pipelineTimer);
+      pipelineTimer = setInterval(() => {
+        if (p < 85) {
+          p += 10;
+          let step = 2;
+          let text = "Running Gemini Agent structured extraction...";
+          if (p >= 60) {
+            step = 3;
+            text = "Evaluating Deterministic Clinical Reference Intervals & Panic Thresholds...";
+          }
+          if (p >= 75) {
+            step = 4;
+            text = "Assembling Grounded Bilingual Explanations & Citations...";
+          }
+          setPipelineProgress(p, text, step);
+        }
+      }, 500);
+
       const fd = new FormData();
       fd.append("file", blob, filename);
 
       try {
         const resp = await fetch("/api/reports/analyze", { method: "POST", body: fd });
-        if (!resp.ok) throw new Error("API analysis failed");
+        clearInterval(pipelineTimer);
+        if (!resp.ok) throw new Error("API analysis failed: " + resp.statusText);
+
+        setPipelineProgress(100, "Analysis Pipeline Successfully Completed! Rendering clinical results...", 5);
+        
         reportData = await resp.json();
-        renderAnalysis(reportData);
+        setTimeout(() => {
+          document.getElementById("livePipelineCard").classList.add("hidden");
+          renderAnalysis(reportData);
+        }, 500);
       } catch (e) {
+        clearInterval(pipelineTimer);
         alert("Error executing report analysis: " + e.message);
+        document.getElementById("livePipelineCard").classList.add("hidden");
       }
     }
 

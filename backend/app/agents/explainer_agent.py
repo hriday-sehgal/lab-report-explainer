@@ -212,9 +212,12 @@ class ExplainerAgent:
                 "कृपया तुरंत अपने डॉक्टर से संपर्क करें या नजदीकी आपातकालीन चिकित्सा केंद्र जाएं।"
             )
 
-        # 2. Try Gemini LLM if client is available
+        # 2. Try Gemini LLM if client is available with retry
         if self.client:
-            models_to_try = [settings.gemini_model] + [m for m in settings.fallback_models if m != settings.gemini_model]
+            models_to_try = ["gemini-3.5-flash-lite", "gemini-3.8-flash", settings.gemini_model]
+            seen = set()
+            unique_models = [m for m in models_to_try if not (m in seen or seen.add(m))]
+            
             biomarkers_payload = [
                 {
                     "item_id": b.item_id,
@@ -234,44 +237,51 @@ class ExplainerAgent:
                 f"INPUT BIOMARKERS:\n{json.dumps(biomarkers_payload, indent=2)}"
             )
             
-            for model_name in models_to_try:
-                try:
-                    response = self.client.models.generate_content(
-                        model=model_name,
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            temperature=0.2,
-                            response_mime_type="application/json"
+            for model_name in unique_models:
+                for attempt in range(2):
+                    try:
+                        response = self.client.models.generate_content(
+                            model=model_name,
+                            contents=prompt,
+                            config=types.GenerateContentConfig(
+                                temperature=0.2,
+                                response_mime_type="application/json"
+                            )
                         )
-                    )
-                    latency = time.perf_counter() - start_time
-                    parsed_res = json.loads(response.text)
-                    
-                    exp_en = [ExplanationItem(**item) for item in parsed_res.get("explanations_en", [])]
-                    exp_hi = [ExplanationItem(**item) for item in parsed_res.get("explanations_hi", [])]
-                    
-                    usage = getattr(response, "usage_metadata", None)
-                    in_tokens = getattr(usage, "prompt_token_count", 950) if usage else 950
-                    out_tokens = getattr(usage, "candidates_token_count", 650) if usage else 650
-                    
-                    cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
-                               (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
-                    cost_inr = cost_usd * settings.usd_to_inr
-                    
-                    perf = {
-                        "latency_seconds": round(latency, 3),
-                        "model_used": model_name,
-                        "execution_mode": "LIVE_LLM",
-                        "is_live_llm": True,
-                        "engine_label": f"Live Gemini LLM ({model_name})",
-                        "input_tokens": in_tokens,
-                        "output_tokens": out_tokens,
-                        "estimated_cost_inr": round(cost_inr, 4)
-                    }
-                    return crit_alert, exp_en, exp_hi, perf
-                except Exception as e:
-                    print(f"[ExplainerAgent] Gemini model '{model_name}' attempt failed: {e}")
-                    continue
+                        latency = time.perf_counter() - start_time
+                        parsed_res = json.loads(response.text)
+                        
+                        exp_en = [ExplanationItem(**item) for item in parsed_res.get("explanations_en", [])]
+                        exp_hi = [ExplanationItem(**item) for item in parsed_res.get("explanations_hi", [])]
+                        
+                        usage = getattr(response, "usage_metadata", None)
+                        in_tokens = getattr(usage, "prompt_token_count", 950) if usage else 950
+                        out_tokens = getattr(usage, "candidates_token_count", 650) if usage else 650
+                        
+                        cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
+                                   (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
+                        cost_inr = cost_usd * settings.usd_to_inr
+                        
+                        perf = {
+                            "latency_seconds": round(latency, 3),
+                            "model_used": model_name,
+                            "execution_mode": "LIVE_LLM",
+                            "is_live_llm": True,
+                            "engine_label": f"Live Gemini LLM ({model_name})",
+                            "input_tokens": in_tokens,
+                            "output_tokens": out_tokens,
+                            "estimated_cost_inr": round(cost_inr, 4)
+                        }
+                        return crit_alert, exp_en, exp_hi, perf
+                    except Exception as e:
+                        msg = str(e)
+                        if "404" in msg:
+                            break
+                        if "503" in msg and attempt == 0:
+                            time.sleep(0.8)
+                            continue
+                        print(f"[ExplainerAgent] Model '{model_name}' attempt {attempt+1} failed: {e}")
+                        break
                 
         # 3. Deterministic Grounded Generation Fallback
         exp_en, exp_hi, perf = self._deterministic_explain(biomarkers, start_time)
