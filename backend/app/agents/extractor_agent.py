@@ -70,43 +70,48 @@ class ExtractorAgent:
         """
         start_time = time.perf_counter()
         
-        # If API key is available, use Gemini
+        # If API key is available, try Gemini models
         if self.client:
-            try:
-                response = self.client.models.generate_content(
-                    model=settings.gemini_model,
-                    contents=[
-                        EXTRACTION_SYSTEM_PROMPT,
-                        f"LAB REPORT TEXT:\n{report_text}"
-                    ],
-                    config=types.GenerateContentConfig(
-                        temperature=0.0,
-                        response_mime_type="application/json"
+            models_to_try = [settings.gemini_model] + [m for m in settings.fallback_models if m != settings.gemini_model]
+            for model_name in models_to_try:
+                try:
+                    response = self.client.models.generate_content(
+                        model=model_name,
+                        contents=[
+                            EXTRACTION_SYSTEM_PROMPT,
+                            f"LAB REPORT TEXT:\n{report_text}"
+                        ],
+                        config=types.GenerateContentConfig(
+                            temperature=0.0,
+                            response_mime_type="application/json"
+                        )
                     )
-                )
-                latency = time.perf_counter() - start_time
-                
-                # Parse JSON
-                raw_json = json.loads(response.text)
-                usage = getattr(response, "usage_metadata", None)
-                in_tokens = getattr(usage, "prompt_token_count", 800) if usage else 800
-                out_tokens = getattr(usage, "candidates_token_count", 350) if usage else 350
-                
-                cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
-                           (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
-                cost_inr = cost_usd * settings.usd_to_inr
-                
-                perf_meta = {
-                    "latency_seconds": round(latency, 3),
-                    "model_used": settings.gemini_model,
-                    "input_tokens": in_tokens,
-                    "output_tokens": out_tokens,
-                    "estimated_cost_inr": round(cost_inr, 4)
-                }
-                return raw_json, perf_meta
-            except Exception as e:
-                # Log and fallback to deterministic local extractor
-                print(f"[ExtractorAgent] Gemini call failed or fallback: {e}")
+                    latency = time.perf_counter() - start_time
+                    
+                    # Parse JSON
+                    raw_json = json.loads(response.text)
+                    usage = getattr(response, "usage_metadata", None)
+                    in_tokens = getattr(usage, "prompt_token_count", 800) if usage else 800
+                    out_tokens = getattr(usage, "candidates_token_count", 350) if usage else 350
+                    
+                    cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
+                               (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
+                    cost_inr = cost_usd * settings.usd_to_inr
+                    
+                    perf_meta = {
+                        "latency_seconds": round(latency, 3),
+                        "model_used": model_name,
+                        "execution_mode": "LIVE_LLM",
+                        "is_live_llm": True,
+                        "engine_label": f"Live Gemini LLM ({model_name})",
+                        "input_tokens": in_tokens,
+                        "output_tokens": out_tokens,
+                        "estimated_cost_inr": round(cost_inr, 4)
+                    }
+                    return raw_json, perf_meta
+                except Exception as e:
+                    print(f"[ExtractorAgent] Gemini model '{model_name}' attempt failed: {e}")
+                    continue
                 
         # Deterministic regex parser fallback (guarantees zero-network execution and offline evals)
         return self._deterministic_extract(report_text, start_time)
@@ -254,7 +259,10 @@ class ExtractorAgent:
         
         perf = {
             "latency_seconds": round(latency, 4),
-            "model_used": "deterministic-regex-engine",
+            "model_used": "deterministic-clinical-engine",
+            "execution_mode": "DETERMINISTIC_FALLBACK",
+            "is_live_llm": False,
+            "engine_label": "Deterministic Clinical Engine (Safe Offline Mode)",
             "input_tokens": 0,
             "output_tokens": 0,
             "estimated_cost_inr": 0.0

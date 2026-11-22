@@ -72,6 +72,9 @@ class PatientMetadata(BaseModel):
 class ProcessingMetadata(BaseModel):
     latency_seconds: float
     model_used: str
+    execution_mode: str = "LIVE_LLM"  # LIVE_LLM | DETERMINISTIC_FALLBACK
+    is_live_llm: bool = False
+    engine_label: str = "Deterministic Clinical Engine"
     input_tokens: int = 0
     output_tokens: int = 0
     estimated_cost_inr: float = 0.0

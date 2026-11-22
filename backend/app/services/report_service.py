@@ -108,9 +108,17 @@ class ReportAnalysisService:
             referred_by=patient_info.get("referred_by")
         )
         
+        is_live = bool(extract_perf.get("is_live_llm") or explain_perf.get("is_live_llm"))
+        active_model = extract_perf.get('model_used') if extract_perf.get('is_live_llm') else explain_perf.get('model_used')
+        if not is_live:
+            active_model = "deterministic-clinical-engine"
+            
         proc_meta = ProcessingMetadata(
             latency_seconds=round(total_latency, 3),
-            model_used=f"{extract_perf.get('model_used', 'agent')} + {explain_perf.get('model_used', 'agent')}",
+            model_used=active_model,
+            execution_mode="LIVE_LLM" if is_live else "DETERMINISTIC_FALLBACK",
+            is_live_llm=is_live,
+            engine_label=f"Live Google Gemini ({active_model})" if is_live else "Deterministic Clinical Engine (Safe Offline Mode)",
             input_tokens=total_in_tokens,
             output_tokens=total_out_tokens,
             estimated_cost_inr=round(total_cost_inr, 4)

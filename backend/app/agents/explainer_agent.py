@@ -214,58 +214,64 @@ class ExplainerAgent:
 
         # 2. Try Gemini LLM if client is available
         if self.client:
-            try:
-                biomarkers_payload = [
-                    {
-                        "item_id": b.item_id,
-                        "test_name": b.test_name,
-                        "value": b.value,
-                        "unit": b.unit,
-                        "reference_low": b.reference_range.low,
-                        "reference_high": b.reference_range.high,
-                        "flag": b.flag.value,
-                        "is_critical": b.is_critical
-                    }
-                    for b in biomarkers
-                ]
-                
-                prompt = (
-                    f"{EXPLAINER_SYSTEM_PROMPT}\n\n"
-                    f"INPUT BIOMARKERS:\n{json.dumps(biomarkers_payload, indent=2)}"
-                )
-                
-                response = self.client.models.generate_content(
-                    model=settings.gemini_model,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        temperature=0.2,
-                        response_mime_type="application/json"
-                    )
-                )
-                latency = time.perf_counter() - start_time
-                parsed_res = json.loads(response.text)
-                
-                exp_en = [ExplanationItem(**item) for item in parsed_res.get("explanations_en", [])]
-                exp_hi = [ExplanationItem(**item) for item in parsed_res.get("explanations_hi", [])]
-                
-                usage = getattr(response, "usage_metadata", None)
-                in_tokens = getattr(usage, "prompt_token_count", 950) if usage else 950
-                out_tokens = getattr(usage, "candidates_token_count", 650) if usage else 650
-                
-                cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
-                           (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
-                cost_inr = cost_usd * settings.usd_to_inr
-                
-                perf = {
-                    "latency_seconds": round(latency, 3),
-                    "model_used": settings.gemini_model,
-                    "input_tokens": in_tokens,
-                    "output_tokens": out_tokens,
-                    "estimated_cost_inr": round(cost_inr, 4)
+            models_to_try = [settings.gemini_model] + [m for m in settings.fallback_models if m != settings.gemini_model]
+            biomarkers_payload = [
+                {
+                    "item_id": b.item_id,
+                    "test_name": b.test_name,
+                    "value": b.value,
+                    "unit": b.unit,
+                    "reference_low": b.reference_range.low,
+                    "reference_high": b.reference_range.high,
+                    "flag": b.flag.value,
+                    "is_critical": b.is_critical
                 }
-                return crit_alert, exp_en, exp_hi, perf
-            except Exception as e:
-                print(f"[ExplainerAgent] Gemini explainer call failed or fallback: {e}")
+                for b in biomarkers
+            ]
+            
+            prompt = (
+                f"{EXPLAINER_SYSTEM_PROMPT}\n\n"
+                f"INPUT BIOMARKERS:\n{json.dumps(biomarkers_payload, indent=2)}"
+            )
+            
+            for model_name in models_to_try:
+                try:
+                    response = self.client.models.generate_content(
+                        model=model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.2,
+                            response_mime_type="application/json"
+                        )
+                    )
+                    latency = time.perf_counter() - start_time
+                    parsed_res = json.loads(response.text)
+                    
+                    exp_en = [ExplanationItem(**item) for item in parsed_res.get("explanations_en", [])]
+                    exp_hi = [ExplanationItem(**item) for item in parsed_res.get("explanations_hi", [])]
+                    
+                    usage = getattr(response, "usage_metadata", None)
+                    in_tokens = getattr(usage, "prompt_token_count", 950) if usage else 950
+                    out_tokens = getattr(usage, "candidates_token_count", 650) if usage else 650
+                    
+                    cost_usd = (in_tokens / 1_000_000 * settings.input_cost_per_m_tokens) + \
+                               (out_tokens / 1_000_000 * settings.output_cost_per_m_tokens)
+                    cost_inr = cost_usd * settings.usd_to_inr
+                    
+                    perf = {
+                        "latency_seconds": round(latency, 3),
+                        "model_used": model_name,
+                        "execution_mode": "LIVE_LLM",
+                        "is_live_llm": True,
+                        "engine_label": f"Live Gemini LLM ({model_name})",
+                        "input_tokens": in_tokens,
+                        "output_tokens": out_tokens,
+                        "estimated_cost_inr": round(cost_inr, 4)
+                    }
+                    return crit_alert, exp_en, exp_hi, perf
+                except Exception as e:
+                    print(f"[ExplainerAgent] Gemini model '{model_name}' attempt failed: {e}")
+                    continue
                 
         # 3. Deterministic Grounded Generation Fallback
         exp_en, exp_hi, perf = self._deterministic_explain(biomarkers, start_time)
@@ -336,6 +342,9 @@ class ExplainerAgent:
         perf = {
             "latency_seconds": round(latency, 4),
             "model_used": "deterministic-clinical-kb",
+            "execution_mode": "DETERMINISTIC_FALLBACK",
+            "is_live_llm": False,
+            "engine_label": "Deterministic Clinical Engine (Safe Offline Mode)",
             "input_tokens": 0,
             "output_tokens": 0,
             "estimated_cost_inr": 0.0
