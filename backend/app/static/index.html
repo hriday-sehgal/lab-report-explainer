@@ -244,7 +244,7 @@
             <div class="flex items-center gap-2">
               <button id="btnTogglePdfViewer" onclick="togglePdfViewer()" class="px-2.5 py-1 text-xs font-semibold rounded-md border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 transition shadow-2xs">
                 <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                <span id="txtTogglePdf">Hide Viewer</span>
+                <span id="txtTogglePdf">View Document</span>
               </button>
               <a id="linkPdfNewTab" href="#" target="_blank" class="px-2.5 py-1 text-xs font-semibold rounded-md border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 transition">
                 <span>Full Page View</span>
@@ -252,7 +252,7 @@
               </a>
             </div>
           </div>
-          <div id="pdfViewerContainer" class="p-4 bg-slate-100/70 border-b border-slate-200 transition-all">
+          <div id="pdfViewerContainer" class="hidden p-4 bg-slate-100/70 border-b border-slate-200 transition-all">
             <iframe id="pdfViewerFrame" class="w-full h-[520px] rounded-lg border border-slate-200 bg-white shadow-xs" src=""></iframe>
           </div>
         </section>
@@ -551,10 +551,10 @@
       const txt = document.getElementById("txtTogglePdf");
       if (box.classList.contains("hidden")) {
         box.classList.remove("hidden");
-        txt.textContent = "Hide Viewer";
+        txt.textContent = "Hide Document";
       } else {
         box.classList.add("hidden");
-        txt.textContent = "Show Viewer";
+        txt.textContent = "View Document";
       }
     }
 
