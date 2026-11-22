@@ -72,7 +72,7 @@ class ExtractorAgent:
         
         # If API key is available, try at most 2 cheap lightweight models (1 attempt each, fast failover)
         if self.client:
-            models_to_try = [settings.gemini_model, "gemini-2.0-flash-lite"]
+            models_to_try = [settings.gemini_model, "gemini-3.5-flash"]
             # Deduplicate preserving order
             unique_models = []
             for m in models_to_try:

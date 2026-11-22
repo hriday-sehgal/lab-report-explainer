@@ -10,6 +10,7 @@ Mandates:
 
 import time
 import json
+import re
 from typing import List, Tuple, Dict, Any
 from google import genai
 from google.genai import types
@@ -214,7 +215,7 @@ class ExplainerAgent:
 
         # 2. Try Gemini LLM if client is available (at most 2 cheap lightweight models, 1 attempt each)
         if self.client:
-            models_to_try = [settings.gemini_model, "gemini-2.0-flash-lite"]
+            models_to_try = [settings.gemini_model, "gemini-3.5-flash"]
             unique_models = []
             for m in models_to_try:
                 if m and m not in unique_models:
